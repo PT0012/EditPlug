@@ -808,21 +808,21 @@ footer { background:var(--deep); border-top:1px solid var(--border); padding:64p
     <div class="proof-grid">
       <div class="proof-card reveal reveal-delay-1">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"Brilliant service from start to finish. Followed my vision and made the changes I wanted with a fast turnover. Will definitely be using you again."</p>
-        <div class="proof-name">Verified Client</div>
-        <div class="proof-role">Content Creator</div>
+        <p class="proof-text">"Finally found an editor who actually gets my style. The matching was quick and the quality was exactly what I needed to scale my posting schedule."</p>
+        <div class="proof-name">TikTok Creator</div>
+        <div class="proof-role">Lifestyle / Reels</div>
       </div>
       <div class="proof-card reveal reveal-delay-2">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"Exceptional service from beginning to end. You brought my vision to life and made all requested changes quickly and efficiently. I'll definitely be returning."</p>
-        <div class="proof-name">Verified Client</div>
-        <div class="proof-role">Content Creator</div>
+        <p class="proof-text">"As an editor I was struggling to find consistent work. EditPlug matched me within days and I've had steady clients ever since. Best decision I made."</p>
+        <div class="proof-name">Verified Editor</div>
+        <div class="proof-role">Adobe Premiere Pro</div>
       </div>
       <div class="proof-card reveal reveal-delay-3">
         <div class="proof-stars">★★★★★</div>
-        <p class="proof-text">"Results were quality and way better than expected, will 100% be using you going forward."</p>
-        <div class="proof-name">Verified Client</div>
-        <div class="proof-role">YouTube & TikTok Creator</div>
+        <p class="proof-text">"Sent raw footage on Monday, had polished content back by Tuesday. My posting consistency has never been better. A genuine game changer."</p>
+        <div class="proof-name">YouTube Creator</div>
+        <div class="proof-role">Long-form & Shorts</div>
       </div>
     </div>
   </div>
@@ -872,7 +872,7 @@ footer { background:var(--deep); border-top:1px solid var(--border); padding:64p
           <a href="https://instagram.com/theeditplug_" target="_blank">Instagram</a>
           <a href="#" target="_blank">TikTok</a>
           <a href="#" target="_blank">YouTube</a>
-          <a href="/cdn-cgi/l/email-protection#345c5158585b7451505d40445841531a575b">Email Us</a>
+          <a href="mailto:hello@editplug.co">Email Us</a>
         </div>
       </div>
     </div>
@@ -888,7 +888,7 @@ footer { background:var(--deep); border-top:1px solid var(--border); padding:64p
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── CURSOR + ELECTRIC TRAIL ──
 const dot = document.getElementById('cursor-dot');
 let mx=0, my=0;
@@ -1039,4 +1039,11 @@ if(liveEl){
     if(entries[0].isIntersecting){
       countUp(liveEl,253,2000);
       lo.disconnect();
-      setTimeout(()=>{ let n=253; setInterval(()
+      setTimeout(()=>{ let n=253; setInterval(()=>{ if(Math.random()>.65){n++;liveEl.textContent=n;} },5000); },2200);
+    }
+  },{threshold:0.5});
+  lo.observe(liveEl);
+}
+</script>
+</body>
+</html>

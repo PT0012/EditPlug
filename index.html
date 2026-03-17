@@ -628,10 +628,20 @@
   var fill = document.getElementById('ldr-fill');
   var progress = 0;
   var interval;
+  var done = false;
 
-  // Tick the bar forward naturally while page loads
+  function hideLdr(){
+    if(done) return;
+    done = true;
+    clearInterval(interval);
+    fill.style.transition = 'width .35s ease';
+    fill.style.width = '100%';
+    setTimeout(function(){
+      document.getElementById('ldr').classList.add('gone');
+    }, 400);
+  }
+
   function tick(){
-    // Slow down as it approaches 90% — waits for real load event to finish
     var step = progress < 30 ? 4 : progress < 60 ? 2.5 : progress < 80 ? 1.2 : progress < 90 ? 0.4 : 0;
     progress = Math.min(progress + step, 90);
     fill.style.width = progress + '%';
@@ -639,15 +649,11 @@
 
   interval = setInterval(tick, 50);
 
-  window.addEventListener('load', function(){
-    clearInterval(interval);
-    // Shoot to 100% then hide
-    fill.style.transition = 'width .35s ease';
-    fill.style.width = '100%';
-    setTimeout(function(){
-      document.getElementById('ldr').classList.add('gone');
-    }, 500);
-  });
+  // Fires when everything is loaded
+  window.addEventListener('load', function(){ setTimeout(hideLdr, 300); });
+
+  // Hard fallback — always hides after 3s no matter what
+  setTimeout(hideLdr, 3000);
 })();
 
 // CURSOR

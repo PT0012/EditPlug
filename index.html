@@ -623,37 +623,24 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// LOADER — real progress bar tied to page load
+// LOADER — guaranteed to dismiss after 2.5s no matter what
 (function(){
   var fill = document.getElementById('ldr-fill');
   var progress = 0;
-  var interval;
-  var done = false;
-
+  var interval = setInterval(function(){
+    progress = Math.min(progress + 3, 95);
+    if(fill) fill.style.width = progress + '%';
+  }, 50);
   function hideLdr(){
-    if(done) return;
-    done = true;
     clearInterval(interval);
-    fill.style.transition = 'width .35s ease';
-    fill.style.width = '100%';
+    if(fill){ fill.style.transition='width .3s'; fill.style.width='100%'; }
     setTimeout(function(){
-      document.getElementById('ldr').classList.add('gone');
-    }, 400);
+      var ldr = document.getElementById('ldr');
+      if(ldr) ldr.classList.add('gone');
+    }, 350);
   }
-
-  function tick(){
-    var step = progress < 30 ? 4 : progress < 60 ? 2.5 : progress < 80 ? 1.2 : progress < 90 ? 0.4 : 0;
-    progress = Math.min(progress + step, 90);
-    fill.style.width = progress + '%';
-  }
-
-  interval = setInterval(tick, 50);
-
-  // Fires when everything is loaded
-  window.addEventListener('load', function(){ setTimeout(hideLdr, 300); });
-
-  // Hard fallback — always hides after 3s no matter what
-  setTimeout(hideLdr, 3000);
+  window.addEventListener('load', function(){ setTimeout(hideLdr, 200); });
+  setTimeout(hideLdr, 2500);
 })();
 
 // CURSOR
@@ -709,4 +696,10 @@ const obs=new IntersectionObserver(entries=>{
     }
   });
 },{threshold:.1});
-document.querySelectorAll(
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// Hero counters
+setTimeout(()=>document.querySelectorAll('.hero-stats [data-target]').forEach(countUp),3200);
+</script>
+</body>
+</html>

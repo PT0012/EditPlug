@@ -167,8 +167,7 @@ a:hover { text-decoration-thickness: 2px; }
 .text-link .icon { width: 18px; height: 18px; }
 
 /* ---------- Header ---------- */
-.header { position: sticky; top: 0; z-index: 50; background: rgb(255 255 255 / 0.96); box-shadow: var(--shadow-header); }
-@supports (backdrop-filter: blur(8px)) { .header { background: rgb(255 255 255 / 0.85); backdrop-filter: saturate(1.4) blur(12px); } }
+.header { position: sticky; top: 0; z-index: 50; background: var(--paper); box-shadow: var(--shadow-header); }
 .header-in { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); min-height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: var(--s-2); text-decoration: none; font-family: var(--font-head); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.01em; min-height: 48px; }
 .brand img { width: 64px; height: 32px; object-fit: contain; }
@@ -193,16 +192,20 @@ a:hover { text-decoration-thickness: 2px; }
 /* "New" tag on the AI Studio link: mirrors the studio's glowing EditPlug link
    (same colours, same 3.2s pulse). */
 .tag-new {
-  display: inline-block; padding: 1px 7px; border-radius: var(--r-pill);
+  position: relative; display: inline-block; padding: 1px 7px; border-radius: var(--r-pill);
   background: var(--accent-soft); color: var(--accent);
   font-size: 0.6875rem; font-weight: 600; line-height: 1.5; letter-spacing: 0.02em;
-  box-shadow: 0 0 0 0 transparent;
+  box-shadow: 0 0 6px 0 color-mix(in srgb, #8b5cf6 45%, transparent);
+}
+/* The brighter blue half of the pulse lives on its own layer and only its
+   opacity animates, so the browser doesn't repaint every frame. */
+.tag-new::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 14px 2px color-mix(in srgb, #5b8def 60%, transparent);
+  opacity: 0; will-change: opacity;
   animation: glow-pulse 3.2s ease-in-out infinite;
 }
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #8b5cf6 45%, transparent); }
-  50% { box-shadow: 0 0 14px 2px color-mix(in srgb, #5b8def 60%, transparent); }
-}
+@keyframes glow-pulse { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
 /* ---------- Hero ---------- */
 .hero { padding-block: var(--s-12) var(--s-12); }
@@ -337,7 +340,7 @@ a:hover { text-decoration-thickness: 2px; }
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .tag-new { animation: none; box-shadow: 0 0 8px 1px color-mix(in srgb, #8b5cf6 40%, transparent); }
+  .tag-new::after { animation: none; opacity: 0.4; }
   .btn:active { transform: none; }
   .btn[aria-busy="true"]::after { animation: none; border-right-color: currentColor; opacity: 0.6; }
 }

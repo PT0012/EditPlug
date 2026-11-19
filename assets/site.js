@@ -6,8 +6,19 @@
   /* 1. Clickjacking: refuse to run inside someone else's frame.
      GitHub Pages can't send X-Frame-Options, so this is a best effort. */
   if (window.top !== window.self) {
-    try { window.top.location.replace(window.location.href); }
-    catch (e) { document.documentElement.style.display = "none"; }
+    // Browsers now block a frame from moving the top window without a click,
+    // so hide the page and offer one link that opens it properly.
+    try { window.top.location.replace(window.location.href); } catch (e) {}
+    var url = window.location.href;
+    document.body.textContent = "";
+    var a = document.createElement("a");
+    a.href = url; a.target = "_top"; a.rel = "noopener";
+    a.className = "btn"; a.textContent = "Open EditPlug";
+    var box = document.createElement("main");
+    box.className = "wrap page";
+    box.appendChild(a);
+    document.body.appendChild(box);
+    return; // run nothing else inside a frame
   }
 
   /* 2. Analytics only after consent (UK PECR). The choice is kept in local

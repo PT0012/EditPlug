@@ -115,7 +115,64 @@
     setTimeout(done, 4000);
   });
 
-  /* 5. Keep the copyright year current */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* 5. AI Studio dropdown in the main nav (disclosure pattern) */
+  document.querySelectorAll(".dd-btn").forEach(function (btn) {
+    var panel = document.getElementById(btn.getAttribute("aria-controls"));
+    var setOpen = function (open) { btn.setAttribute("aria-expanded", String(open)); panel.hidden = !open; };
+    btn.addEventListener("click", function () { setOpen(panel.hidden); });
+    document.addEventListener("click", function (e) { if (!panel.hidden && !btn.parentNode.contains(e.target)) setOpen(false); });
+    btn.parentNode.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) { setOpen(false); btn.focus(); } });
+    btn.parentNode.addEventListener("focusout", function (e) { if (!btn.parentNode.contains(e.relatedTarget)) setOpen(false); });
+  });
+
+  /* 6. Moving strip: pause button (WCAG 2.2.2) */
+  var marquee = document.querySelector(".marquee");
+  if (marquee) {
+    var mBtn = marquee.querySelector(".marquee-toggle");
+    mBtn.addEventListener("click", function () {
+      var paused = marquee.classList.toggle("is-paused");
+      mBtn.setAttribute("aria-pressed", String(paused));
+      mBtn.setAttribute("aria-label", paused ? "Play the moving list" : "Pause the moving list");
+    });
+  }
+
+  /* 7. Community carousel arrows */
+  var reviewsTrack = document.getElementById("reviews-track");
+  document.querySelectorAll("[data-scroll]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var card = reviewsTrack.querySelector("li");
+      var step = card ? card.getBoundingClientRect().width + 24 : 300;
+      reviewsTrack.scrollBy({ left: step * Number(b.getAttribute("data-scroll")), behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  });
+
+  /* 8. AI Studio example videos: play only while on screen, never with
+     reduced motion or data saver, and the visitor can pause them. */
+  var vids = [].slice.call(document.querySelectorAll("video.auto"));
+  var vToggle = document.getElementById("studio-toggle");
+  var saveData = navigator.connection && navigator.connection.saveData;
+  var userPaused = reduceMotion || saveData;
+  var visible = new Set();
+  function syncVideos() {
+    vids.forEach(function (v) {
+      if (!userPaused && visible.has(v)) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else v.pause();
+    });
+    if (vToggle) { vToggle.textContent = userPaused ? "Play videos" : "Pause videos"; vToggle.setAttribute("aria-pressed", String(userPaused)); }
+  }
+  if (vids.length && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) visible.add(en.target); else visible.delete(en.target); });
+      syncVideos();
+    }, { threshold: 0.4 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+  if (vToggle) vToggle.addEventListener("click", function () { userPaused = !userPaused; syncVideos(); });
+  syncVideos();
+
+  /* 9. Keep the copyright year current */
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 })();

@@ -575,3 +575,5 @@ html.menu-open { overflow: hidden; }
 
 /* Top bar spans the full width: logo far left, actions far right. */
 .wrap.header-in { max-width: none; }
+/* Links sit beside the logo; the account buttons stay far right. */
+@media (min-width: 60rem) { .header-in { justify-content: flex-start; gap: var(--s-8); } .header-cta { margin-left: auto; } }

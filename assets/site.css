@@ -526,6 +526,20 @@ a:hover { text-decoration-thickness: 2px; }
   .mobile-menu a { min-height: 44px; font-size: var(--text-sm, 1rem); }
 }
 
+/* Phones: the menu is a compact panel that scrolls on its own, so every
+   link (AI Studio included) can be reached, and the page behind stays put. */
+.menu-quick { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); padding-top: var(--s-3); }
+.mobile-menu .menu-quick a { justify-content: center; min-height: 48px; border-bottom: 0; font-size: var(--text-sm, 1rem); }
+html.menu-open { overflow: hidden; }
+@media (max-width: 47.99rem) {
+  .mobile-menu:not([hidden]) { max-height: calc(100dvh - 64px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: calc(var(--s-6) + env(safe-area-inset-bottom)); }
+  .mobile-menu a { min-height: 46px; font-size: 1rem; }
+  .mobile-menu .menu-col--page { grid-template-columns: 1fr 1fr; column-gap: var(--s-4); }
+  .mobile-menu .menu-col--page .mobile-group { grid-column: 1 / -1; }
+  .mobile-menu .dup-phone { display: none; }
+}
+@media (min-width: 48rem) { .menu-quick { display: none; } }
+
 /* Work: Before and After */
 .ba figure { margin: 0; }
 .ba video { object-fit: contain; }

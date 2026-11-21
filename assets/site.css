@@ -549,3 +549,4 @@ a:hover { text-decoration-thickness: 2px; }
 .lightbox-foot { display: flex; justify-content: flex-end; margin-top: var(--s-2); }
 .lightbox-foot[hidden] { display: none; }
 .lightbox .quality { color: #fff; }
+.tile--tall video { aspect-ratio: auto; height: 100%; }

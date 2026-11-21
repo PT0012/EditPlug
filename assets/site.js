@@ -271,6 +271,7 @@
   if (signedIn) {
     document.querySelectorAll("[data-account]").forEach(function (a) { a.textContent = "My account"; });
     document.querySelectorAll("[data-account-out]").forEach(function (a) { a.hidden = true; });
+    document.querySelectorAll("[data-account-in]").forEach(function (a) { a.hidden = false; });
     document.querySelectorAll("[data-quote]").forEach(function (a) {
       a.href = "https://aistudio.editplug.com/app/projects/new?utm_source=editplug.com&utm_medium=website&utm_content=" + (a.dataset.where || "quote");
     });

@@ -93,6 +93,20 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { setOpen(false); menuBtn.focus(); } });
   }
 
+  /* 3b. Signed in to EditPlug? The account server sets a harmless yes/no
+     cookie for editplug.com (no identity in it). */
+  var signedIn = /(?:^|;\s*)ep_signed_in=1(?:;|$)/.test(document.cookie);
+
+  /* 3c. Cookie-free visit counter on our own server: daily totals only,
+     nothing stored in the browser, so it needs no consent. Real site only. */
+  var COUNTER = "https://aistudio.editplug.com/api/site-beacon";
+  var live_site = /(^|\.)editplug\.com$/.test(location.hostname);
+  function count(name) {
+    if (!live_site || !navigator.sendBeacon) return;
+    try { navigator.sendBeacon(COUNTER, JSON.stringify(name ? { t: "event", name: name } : { t: "view", path: location.pathname, referrer: document.referrer })); } catch (e) {}
+  }
+  count();
+
   /* 4. Links that open a form in a new tab: show a waiting state, and
      record which audience clicked (only if analytics were accepted). */
   var live = document.getElementById("live");
@@ -100,11 +114,11 @@
     var a = e.target.closest("a[href]");
     if (!a) return;
     var href = a.href;
-    // Quote requests now go to the EditPlug quote page; the event name is kept so past reports still line up.
-    if (href.indexOf("aistudio.editplug.com/quote") > -1) track("creator_form_click", { event_category: "conversion", event_label: a.dataset.where || "" });
-    else if (href.indexOf("tally.so/r/wLOxXp") > -1) track("editor_form_click", { event_category: "conversion", event_label: a.dataset.where || "" });
-    else if (/aistudio\.editplug\.com\/(sign-in|sign-up|app)/.test(href)) track("account_click", { event_label: a.dataset.where || "" });
-    else if (href.indexOf("aistudio.editplug.com") > -1) track("ai_studio_click", { event_label: a.dataset.where || "" });
+    // Get a quote: the join form when signed out, the project brief when signed in. Same GA event name as before.
+    if (a.hasAttribute("data-quote")) { track("creator_form_click", { event_category: "conversion", event_label: a.dataset.where || "" }); count(signedIn ? "quote_brief" : "quote_join"); }
+    else if (href.indexOf("tally.so/r/wLOxXp") > -1) { track("editor_form_click", { event_category: "conversion", event_label: a.dataset.where || "" }); count("editor_apply"); }
+    else if (/\/account\/?$|aistudio\.editplug\.com\/(sign-in|sign-up|app|account)/.test(href)) { track("account_click", { event_label: a.dataset.where || "" }); count("account"); }
+    else if (href.indexOf("aistudio.editplug.com") > -1) { track("ai_studio_click", { event_label: a.dataset.where || "" }); count("ai_studio"); }
 
     if (!a.hasAttribute("data-wait") || a.getAttribute("aria-busy") === "true") return;
     a.setAttribute("aria-busy", "true");
@@ -178,6 +192,7 @@
      time, and no download option in the player menu. */
   var baVideos = [].slice.call(document.querySelectorAll(".ba video[data-src]"));
   var quality = document.getElementById("ba-quality");
+  var played = false;
   if (quality) quality.addEventListener("change", function () {
     baVideos.forEach(function (v) {
       var t = v.currentTime, playing = !v.paused;
@@ -194,7 +209,7 @@
   });
   baVideos.forEach(function (v) {
     v.addEventListener("contextmenu", function (e) { e.preventDefault(); });
-    v.addEventListener("play", function () { baVideos.forEach(function (o) { if (o !== v) o.pause(); }); });
+    v.addEventListener("play", function () { baVideos.forEach(function (o) { if (o !== v) o.pause(); }); if (!played) { played = true; count("video_play"); } });
   });
 
   /* 11. AI Studio examples: tap to see one bigger. Uses the native dialog, so
@@ -203,6 +218,8 @@
   if (box && box.showModal) {
     var boxBody = box.querySelector(".lightbox-body");
     var boxTitle = document.getElementById("lightbox-title");
+    var lbFoot = box.querySelector(".lightbox-foot");
+    var lbQuality = document.getElementById("lb-quality");
     var resumeAfter = false;
     var openTile = function (tile) {
       var media = tile.querySelector("img, video");
@@ -214,11 +231,26 @@
         big.src = media.currentSrc || media.src; big.alt = media.alt;
       } else {
         big = document.createElement("video");
-        big.src = media.querySelector("source").src; big.poster = media.poster;
-        big.controls = true; big.loop = true; big.muted = true; big.playsInline = true;
+        var full = media.getAttribute("data-full"), small = media.querySelector("source").src;
+        big.src = full || small; big.poster = media.poster;
+        // Opened by a tap, so the browser allows sound: the originals have it.
+        big.controls = true; big.loop = true; big.playsInline = true;
         big.setAttribute("controlslist", "nodownload"); big.setAttribute("aria-label", media.getAttribute("aria-label"));
+        big.addEventListener("contextmenu", function (e) { e.preventDefault(); });
         if (!reduceMotion) big.autoplay = true;
+        lbQuality.options[0].textContent = "Original (" + (media.getAttribute("data-full-height") || "HD") + "p)";
+        lbQuality.value = "full";
+        lbQuality.onchange = function () {
+          var t = big.currentTime, playing = !big.paused;
+          big.src = lbQuality.value === "full" && full ? full : small;
+          big.addEventListener("loadedmetadata", function once() {
+            big.removeEventListener("loadedmetadata", once);
+            big.currentTime = t;
+            if (playing) { var p = big.play(); if (p && p.catch) p.catch(function () {}); }
+          });
+        };
       }
+      lbFoot.hidden = media.tagName === "IMG" || !media.getAttribute("data-full");
       boxBody.appendChild(big);
       boxTitle.textContent = name + ", made in EditPlug AI Studio";
       resumeAfter = !userPaused; userPaused = true; syncVideos();
@@ -234,14 +266,14 @@
     });
   }
 
-  /* 12. Signed in to EditPlug? The account server sets a harmless yes/no
-     cookie for editplug.com, so "Sign in" can become "My account". */
-  if (/(?:^|;\s*)ep_signed_in=1(?:;|$)/.test(document.cookie)) {
-    document.querySelectorAll("[data-account]").forEach(function (a) {
-      a.textContent = "My account";
-      a.href = "https://aistudio.editplug.com/app/projects?utm_source=editplug.com&utm_medium=website&utm_content=" + (a.dataset.where || "account");
-    });
+  /* 12. Signed in: "Sign in" becomes "My account", and Get a quote opens
+     the project brief instead of the join form. */
+  if (signedIn) {
+    document.querySelectorAll("[data-account]").forEach(function (a) { a.textContent = "My account"; });
     document.querySelectorAll("[data-account-out]").forEach(function (a) { a.hidden = true; });
+    document.querySelectorAll("[data-quote]").forEach(function (a) {
+      a.href = "https://aistudio.editplug.com/app/projects/new?utm_source=editplug.com&utm_medium=website&utm_content=" + (a.dataset.where || "quote");
+    });
   }
 
   /* 9. Keep the copyright year current */

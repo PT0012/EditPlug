@@ -546,3 +546,6 @@ a:hover { text-decoration-thickness: 2px; }
 .lightbox-head p { margin: 0; font-weight: 600; }
 .lightbox-body img, .lightbox-body video { display: block; width: 100%; max-height: calc(100dvh - 8rem); object-fit: contain; border-radius: var(--r-inner); background: #000; }
 .mobile-menu a[hidden] { display: none; }
+.lightbox-foot { display: flex; justify-content: flex-end; margin-top: var(--s-2); }
+.lightbox-foot[hidden] { display: none; }
+.lightbox .quality { color: #fff; }

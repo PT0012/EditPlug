@@ -87,6 +87,14 @@
       menuBtn.setAttribute("aria-expanded", String(open));
       menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       menu.hidden = !open;
+      document.documentElement.classList.toggle("menu-open", open);
+      if (open && window.matchMedia("(max-width: 47.99rem)").matches) {
+        /* Fit the panel under the header, whatever the header's height. */
+        var head = menuBtn.closest("header");
+        var top = head ? head.getBoundingClientRect().height - menu.getBoundingClientRect().height : 64;
+        menu.style.maxHeight = "calc(100dvh - " + Math.max(48, Math.round(top)) + "px)";
+        menu.scrollTop = 0;
+      }
     };
     menuBtn.addEventListener("click", function () { setOpen(menu.hidden); });
     menu.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
@@ -271,6 +279,7 @@
   if (signedIn) {
     document.querySelectorAll("[data-account]").forEach(function (a) { a.textContent = "My account"; });
     document.querySelectorAll("[data-account-out]").forEach(function (a) { a.hidden = true; });
+    document.querySelectorAll("[data-account-in]").forEach(function (a) { a.hidden = false; });
     document.querySelectorAll("[data-quote]").forEach(function (a) {
       a.href = "https://aistudio.editplug.com/app/projects/new?utm_source=editplug.com&utm_medium=website&utm_content=" + (a.dataset.where || "quote");
     });

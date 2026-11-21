@@ -515,6 +515,9 @@ a:hover { text-decoration-thickness: 2px; }
 @media (min-width: 30rem) { .account-link { display: inline-flex; } }
 .menu-btn { width: auto; min-width: 48px; gap: var(--s-2); padding: 0 var(--s-2); font: 600 var(--text-xs) var(--font-body); }
 .menu-label { display: none; }
+/* Sign out sits beside My account on wide screens; phones have it in the menu. */
+.account-signout { display: none; color: var(--muted); }
+@media (min-width: 60rem) { .account-signout:not([hidden]) { display: inline-flex; } }
 @media (min-width: 60rem) { .menu-label { display: inline; } .menu-btn { margin-right: 0; border: var(--bw) solid var(--ink); height: 44px; } }
 
 /* The site menu: one column on phones, three on wider screens */

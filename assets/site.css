@@ -567,3 +567,8 @@ html.menu-open { overflow: hidden; }
 .lightbox-foot[hidden] { display: none; }
 .lightbox .quality { color: #fff; }
 .tile--tall video { aspect-ratio: auto; height: 100%; }
+
+/* Big monitors: use more of the screen (matches the AI Studio wide container).
+   Paragraphs keep --measure, so lines stay easy to read. */
+@media (min-width: 96rem) { :root { --max: 88rem; --gutter: 3rem; } }
+@media (min-width: 120rem) { :root { --max: 100rem; --gutter: 4rem; --text-hero: 4.75rem; --text-3xl: 3rem; } .hero .lede { max-width: 38rem; } }

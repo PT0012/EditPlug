@@ -100,8 +100,10 @@
     var a = e.target.closest("a[href]");
     if (!a) return;
     var href = a.href;
-    if (href.indexOf("tally.so/r/3qzQBg") > -1) track("creator_form_click", { event_category: "conversion", event_label: a.dataset.where || "" });
+    // Quote requests now go to the EditPlug quote page; the event name is kept so past reports still line up.
+    if (href.indexOf("aistudio.editplug.com/quote") > -1) track("creator_form_click", { event_category: "conversion", event_label: a.dataset.where || "" });
     else if (href.indexOf("tally.so/r/wLOxXp") > -1) track("editor_form_click", { event_category: "conversion", event_label: a.dataset.where || "" });
+    else if (/aistudio\.editplug\.com\/(sign-in|sign-up|app)/.test(href)) track("account_click", { event_label: a.dataset.where || "" });
     else if (href.indexOf("aistudio.editplug.com") > -1) track("ai_studio_click", { event_label: a.dataset.where || "" });
 
     if (!a.hasAttribute("data-wait") || a.getAttribute("aria-busy") === "true") return;
@@ -171,6 +173,76 @@
   }
   if (vToggle) vToggle.addEventListener("click", function () { userPaused = !userPaused; syncVideos(); });
   syncVideos();
+
+  /* 10. Before and After: quality picker (1080p by default), one video at a
+     time, and no download option in the player menu. */
+  var baVideos = [].slice.call(document.querySelectorAll(".ba video[data-src]"));
+  var quality = document.getElementById("ba-quality");
+  if (quality) quality.addEventListener("change", function () {
+    baVideos.forEach(function (v) {
+      var t = v.currentTime, playing = !v.paused;
+      v.src = v.getAttribute("data-src") + "-" + quality.value + ".mp4";
+      if (t || playing) {
+        v.addEventListener("loadedmetadata", function once() {
+          v.removeEventListener("loadedmetadata", once);
+          v.currentTime = t;
+          if (playing) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        });
+        v.load();
+      }
+    });
+  });
+  baVideos.forEach(function (v) {
+    v.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    v.addEventListener("play", function () { baVideos.forEach(function (o) { if (o !== v) o.pause(); }); });
+  });
+
+  /* 11. AI Studio examples: tap to see one bigger. Uses the native dialog, so
+     Escape and focus return work for free. */
+  var box = document.getElementById("lightbox");
+  if (box && box.showModal) {
+    var boxBody = box.querySelector(".lightbox-body");
+    var boxTitle = document.getElementById("lightbox-title");
+    var resumeAfter = false;
+    var openTile = function (tile) {
+      var media = tile.querySelector("img, video");
+      var name = tile.querySelector("figcaption").textContent;
+      boxBody.textContent = "";
+      var big;
+      if (media.tagName === "IMG") {
+        big = document.createElement("img");
+        big.src = media.currentSrc || media.src; big.alt = media.alt;
+      } else {
+        big = document.createElement("video");
+        big.src = media.querySelector("source").src; big.poster = media.poster;
+        big.controls = true; big.loop = true; big.muted = true; big.playsInline = true;
+        big.setAttribute("controlslist", "nodownload"); big.setAttribute("aria-label", media.getAttribute("aria-label"));
+        if (!reduceMotion) big.autoplay = true;
+      }
+      boxBody.appendChild(big);
+      boxTitle.textContent = name + ", made in EditPlug AI Studio";
+      resumeAfter = !userPaused; userPaused = true; syncVideos();
+      box.showModal();
+    };
+    document.querySelectorAll(".studio-grid .tile").forEach(function (tile) {
+      tile.addEventListener("click", function () { openTile(tile); });
+    });
+    box.addEventListener("click", function (e) { if (e.target === box || e.target.closest("[data-close]")) box.close(); });
+    box.addEventListener("close", function () {
+      boxBody.textContent = "";
+      if (resumeAfter) { userPaused = false; syncVideos(); }
+    });
+  }
+
+  /* 12. Signed in to EditPlug? The account server sets a harmless yes/no
+     cookie for editplug.com, so "Sign in" can become "My account". */
+  if (/(?:^|;\s*)ep_signed_in=1(?:;|$)/.test(document.cookie)) {
+    document.querySelectorAll("[data-account]").forEach(function (a) {
+      a.textContent = "My account";
+      a.href = "https://aistudio.editplug.com/app/projects?utm_source=editplug.com&utm_medium=website&utm_content=" + (a.dataset.where || "account");
+    });
+    document.querySelectorAll("[data-account-out]").forEach(function (a) { a.hidden = true; });
+  }
 
   /* 9. Keep the copyright year current */
   var y = document.getElementById("year");

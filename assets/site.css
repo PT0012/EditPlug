@@ -186,7 +186,6 @@ a:hover { text-decoration-thickness: 2px; }
 .mobile-menu a { display: flex; align-items: center; gap: var(--s-2); min-height: 52px; font-size: var(--text-md); font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--line); }
 @media (min-width: 60rem) {
   .nav { display: block; }
-  .menu-btn, .mobile-menu { display: none !important; }
 }
 
 /* "New" tag on the AI Studio link: mirrors the studio's glowing EditPlug link
@@ -507,3 +506,43 @@ a:hover { text-decoration-thickness: 2px; }
   .marquee ul[aria-hidden="true"], .marquee-toggle { display: none; }
   .btn:hover, .btn--ghost:hover, .round-btn:hover { transform: none; }
 }
+
+/* ---------- Round 3 ---------- */
+
+/* Header: account link and a menu button at every width */
+.account-link { display: none; align-items: center; min-height: 44px; padding: 0 var(--s-3); border-radius: var(--r-control); color: var(--ink); font-size: var(--text-xs); font-weight: 600; text-decoration: none; }
+.account-link:hover { background: var(--surface); }
+@media (min-width: 30rem) { .account-link { display: inline-flex; } }
+.menu-btn { width: auto; min-width: 48px; gap: var(--s-2); padding: 0 var(--s-2); font: 600 var(--text-xs) var(--font-body); }
+.menu-label { display: none; }
+@media (min-width: 60rem) { .menu-label { display: inline; } .menu-btn { margin-right: 0; border: var(--bw) solid var(--ink); height: 44px; } }
+
+/* The site menu: one column on phones, three on wider screens */
+.mobile-menu .menu-col { display: grid; align-content: start; }
+.mobile-menu .mobile-group { margin-top: var(--s-4); }
+.menu-note { margin: var(--s-2) 0 0; color: var(--muted); font-size: 0.8125rem; }
+@media (min-width: 48rem) {
+  .mobile-menu:not([hidden]) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-8); padding-block: var(--s-4) var(--s-8); }
+  .mobile-menu a { min-height: 44px; font-size: var(--text-sm, 1rem); }
+}
+
+/* Work: Before and After */
+.ba figure { margin: 0; }
+.ba video { object-fit: contain; }
+.ba-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-3) var(--s-6); margin-top: var(--s-4); }
+.ba-foot .ba-caption { margin: 0; max-width: 46rem; }
+.quality { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--text-xs); font-weight: 600; }
+.quality select { min-height: 40px; padding: 0 var(--s-3); border: var(--bw) solid var(--ink); border-radius: var(--r-control); background: var(--paper); color: var(--ink); font: inherit; box-shadow: 2px 2px 0 0 var(--ink); cursor: pointer; }
+
+/* AI Studio examples: enlarge */
+.tile { cursor: zoom-in; }
+.tile-zoom { position: absolute; right: var(--s-2); top: var(--s-2); display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgb(0 0 0 / 0.65); color: #fff; cursor: pointer; }
+.tile-zoom:hover, .tile-zoom:focus-visible { background: var(--accent); }
+.studio-tip { flex-basis: 100%; }
+
+.lightbox { width: min(100% - 2rem, 72rem); max-height: calc(100dvh - 2rem); padding: var(--s-3); border: var(--bw) solid var(--ink); border-radius: var(--r-card); background: var(--ink); color: #fff; box-shadow: var(--shadow-card); }
+.lightbox::backdrop { background: rgb(10 8 20 / 0.8); }
+.lightbox-head { display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); margin-bottom: var(--s-2); }
+.lightbox-head p { margin: 0; font-weight: 600; }
+.lightbox-body img, .lightbox-body video { display: block; width: 100%; max-height: calc(100dvh - 8rem); object-fit: contain; border-radius: var(--r-inner); background: #000; }
+.mobile-menu a[hidden] { display: none; }

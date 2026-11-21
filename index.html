@@ -49,7 +49,7 @@
               <strong>Open AI Studio</strong><span>Product photos, ads and social posts made with AI</span>
             </a>
             <a href="https://aistudio.editplug.com/sign-in?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=nav-signin" data-where="nav-signin">
-              <strong>Sign in</strong><span>Your AI Studio account, credits and creations</span>
+              <strong>Sign in</strong><span>One EditPlug account for AI Studio and your editing projects</span>
             </a>
             <a href="https://aistudio.editplug.com/pricing?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=nav-pricing" data-where="nav-pricing">
               <strong>AI Studio pricing</strong><span>Plans and credit packs</span>
@@ -59,22 +59,39 @@
       </ul>
     </nav>
     <div class="header-cta">
-      <a class="btn btn--sm" href="https://tally.so/r/3qzQBg" target="_blank" rel="noopener" data-wait data-where="header"><span class="btn-label">Get a quote</span><span class="sr-only"> (opens in a new tab)</span></a>
+      <a class="account-link" href="https://aistudio.editplug.com/sign-in?next=/app/projects&amp;utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=header" data-account data-where="header-signin">Sign in</a>
+      <a class="btn btn--sm" href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=header" data-where="header"><span class="btn-label">Get a quote</span></a>
       <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="menu-label" aria-hidden="true">Menu</span>
         <svg class="icon i-open" aria-hidden="true"><use href="/assets/icons.svg#menu"/></svg>
         <svg class="icon i-close" aria-hidden="true"><use href="/assets/icons.svg#close"/></svg>
       </button>
     </div>
   </div>
-  <nav class="wrap mobile-menu" id="mobile-menu" aria-label="Main" hidden>
-    <a href="#work">Work</a>
-    <a href="#story">Our story</a>
-    <a href="#how">How it works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#editors">For editors</a>
-    <p class="mobile-group">AI Studio <span class="tag-new">New</span></p>
-    <a class="sub" href="https://aistudio.editplug.com/?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=mobile-nav" data-where="mobile-nav">Open AI Studio</a>
-    <a class="sub" href="https://aistudio.editplug.com/sign-in?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=mobile-signin" data-where="mobile-signin">Sign in to AI Studio</a>
+  <nav class="wrap mobile-menu" id="mobile-menu" aria-label="Site menu" hidden>
+    <div class="menu-col">
+      <p class="mobile-group">On this page</p>
+      <a href="#work">Our work</a>
+      <a href="#story">Our story</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#reviews">Community voices</a>
+      <a href="#editors">For editors</a>
+      <a href="#ai-studio">AI Studio examples</a>
+    </div>
+    <div class="menu-col">
+      <p class="mobile-group">Your EditPlug account</p>
+      <a href="https://aistudio.editplug.com/sign-in?next=/app/projects&amp;utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=menu" data-account data-where="menu-signin">Sign in</a>
+      <a href="https://aistudio.editplug.com/sign-up?next=/app/projects&amp;utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=menu-signup" data-account-out data-where="menu-signup">Create a free account</a>
+      <a href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=menu" data-where="menu">Get a quote</a>
+      <p class="menu-note">One account for your editing projects and AI Studio.</p>
+    </div>
+    <div class="menu-col">
+      <p class="mobile-group">AI Studio <span class="tag-new">New</span></p>
+      <a href="https://aistudio.editplug.com/?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=menu-studio" data-where="menu-studio">Open AI Studio</a>
+      <a href="https://aistudio.editplug.com/pricing?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=menu-studio-pricing" data-where="menu-studio-pricing">AI Studio pricing</a>
+      <a href="https://tally.so/r/wLOxXp" target="_blank" rel="noopener" data-where="menu">Apply as an editor<span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
   </nav>
 </header>
 
@@ -86,7 +103,7 @@
       <h1 id="hero-title">We match creators and businesses with <span class="grad">the right video editor.</span></h1>
       <p class="lede">Tell us what you make and where you post. We personally pick a vetted editor who fits your style, platform and budget, then manage the edit from brief to final file. Not an algorithm. A community.</p>
       <div class="hero-actions">
-        <a class="btn btn--lg" href="https://tally.so/r/3qzQBg" target="_blank" rel="noopener" data-wait data-where="hero"><span class="btn-label">Get a quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn--lg" href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=hero" data-where="hero"><span class="btn-label">Get a quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right"/></svg></a>
         <a class="text-link" href="#editors">Are you an editor? Join the network <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right"/></svg></a>
       </div>
     </div>
@@ -116,19 +133,28 @@
 
       <div class="ba">
         <figure>
-          <!-- PLACEHOLDER: a 9-second raw clip from Paul's shoot (the same moments as the intro).
-               Replace this div with: <video controls playsinline preload="none" poster="/assets/media/paul-raw.jpg" width="568" height="320"><source src="/assets/media/paul-raw.mp4" type="video/mp4"></video> -->
-          <div class="ph"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#play"/></svg><span>The raw footage for this edit, coming soon</span></div>
-          <figcaption>Before</figcaption>
+          <video controls playsinline preload="none" controlslist="nodownload noplaybackrate" disablepictureinpicture poster="/assets/media/paul-before.jpg" width="1920" height="1080" data-src="/assets/media/paul-before" aria-label="Before: raw footage straight from the camera">
+            <source src="/assets/media/paul-before-1080.mp4" type="video/mp4">
+          </video>
+          <figcaption>Before: raw footage</figcaption>
         </figure>
         <figure>
-          <video controls playsinline preload="none" poster="/assets/media/paul-intro.jpg" width="568" height="320" aria-label="After: the edited intro for Paulinho's YouTube vlog">
-            <source src="/assets/media/paul-intro.mp4" type="video/mp4">
+          <video controls playsinline preload="none" controlslist="nodownload noplaybackrate" disablepictureinpicture poster="/assets/media/paul-after.jpg" width="1920" height="1080" data-src="/assets/media/paul-after" aria-label="After: the finished intro for Paulinho's YouTube vlog">
+            <source src="/assets/media/paul-after-1080.mp4" type="video/mp4">
           </video>
-          <figcaption>After</figcaption>
+          <figcaption>After: the finished intro</figcaption>
         </figure>
       </div>
-      <p class="ba-caption"><strong>Paulinho1st, YouTube vlog.</strong> Night-out footage cut into a fast, punchy intro with titles and music.</p>
+      <div class="ba-foot">
+        <p class="ba-caption"><strong>An example intro, made from raw vlog footage.</strong> Paulinho1st's night out, cut into a fast, punchy YouTube intro with titles, effects and music. Shown with his permission.</p>
+        <label class="quality" for="ba-quality">Quality
+          <select id="ba-quality">
+            <option value="1080" selected>1080p HD</option>
+            <option value="720">720p</option>
+            <option value="360">360p (saves data)</option>
+          </select>
+        </label>
+      </div>
 
       <ul class="formats" role="list">
         <li class="card">
@@ -245,7 +271,7 @@
         </li>
       </ul>
       <div class="price-cta">
-        <a class="btn btn--lg" href="https://tally.so/r/3qzQBg" target="_blank" rel="noopener" data-wait data-where="pricing"><span class="btn-label">Get your quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn--lg" href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=pricing" data-where="pricing"><span class="btn-label">Get your quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right"/></svg></a>
         <p class="muted">Free to ask. No commitment until you approve the price.</p>
       </div>
     </div>
@@ -260,7 +286,6 @@
           <h2 class="h2" id="reviews-title">They found their plug.</h2>
           <p class="lede">Messages from creators and editors in our community on Discord, Instagram and TikTok. Names are withheld at their request.</p>
         </div>
-        <p class="community-n"><span class="num">200+</span> followers across Discord, Instagram and TikTok</p>
       </div>
       <div class="carousel">
         <ul class="reviews" role="list" id="reviews-track" tabindex="0" aria-label="Community messages, scroll sideways for more">
@@ -320,7 +345,7 @@
       <div>
         <p class="eyebrow"><svg class="icon icon--sm" aria-hidden="true"><use href="/assets/icons.svg#sparkle"/></svg>EditPlug AI Studio <span class="tag-new">New</span></p>
         <h2 class="h2" id="studio-title">Make product photos, ads and social posts with AI.</h2>
-        <p class="lede">Our studio for still images and short video, made in minutes with the latest models. Your account, credits and creations all live on the studio.</p>
+        <p class="lede">Our studio for still images and short video, made in minutes with the latest models. One EditPlug account works here and in the studio.</p>
         <div class="price-cta">
           <a class="btn btn--ghost btn--lg" href="https://aistudio.editplug.com/?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=section" data-where="section"><span class="btn-label">Open AI Studio</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-up-right"/></svg></a>
           <a class="text-link" href="https://aistudio.editplug.com/sign-in?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=section-signin" data-where="section-signin">Sign in</a>
@@ -331,23 +356,28 @@
           <figure class="tile tile--tall">
             <img src="/assets/media/flux3.webp" width="900" height="1125" loading="lazy" alt="Made with FLUX.3 in AI Studio: a ceramic coffee cup on an oak table in morning light">
             <figcaption>FLUX.3</figcaption>
+            <button type="button" class="tile-zoom" data-zoom aria-label="Enlarge the FLUX.3 example"><svg class="icon icon--xs" aria-hidden="true"><use href="/assets/icons.svg#expand"/></svg></button>
           </figure>
           <figure class="tile">
             <video class="auto" muted loop playsinline preload="none" poster="/assets/media/seedance25-t2v.jpg" width="640" height="360" aria-label="Made with Seedance 2.5 in AI Studio: a hot air balloon rising over green hills at sunrise"><source src="/assets/media/seedance25-t2v.mp4" type="video/mp4"></video>
             <figcaption>Seedance 2.5</figcaption>
+            <button type="button" class="tile-zoom" data-zoom aria-label="Enlarge the Seedance 2.5 example"><svg class="icon icon--xs" aria-hidden="true"><use href="/assets/icons.svg#expand"/></svg></button>
           </figure>
           <figure class="tile">
             <video class="auto" muted loop playsinline preload="none" poster="/assets/media/gemini-omni-flash-t2v.jpg" width="640" height="360" aria-label="Made with Google Gemini Omni Flash in AI Studio: rain on a city street at night with neon reflections"><source src="/assets/media/gemini-omni-flash-t2v.mp4" type="video/mp4"></video>
             <figcaption>Gemini Omni Flash</figcaption>
+            <button type="button" class="tile-zoom" data-zoom aria-label="Enlarge the Gemini Omni Flash example"><svg class="icon icon--xs" aria-hidden="true"><use href="/assets/icons.svg#expand"/></svg></button>
           </figure>
           <figure class="tile">
             <video class="auto" muted loop playsinline preload="none" poster="/assets/media/kling4-flash-t2v.jpg" width="640" height="360" aria-label="Made with Kling 4.0 Flash in AI Studio: a paper boat drifting on a calm pond"><source src="/assets/media/kling4-flash-t2v.mp4" type="video/mp4"></video>
             <figcaption>Kling 4.0</figcaption>
+            <button type="button" class="tile-zoom" data-zoom aria-label="Enlarge the Kling 4.0 example"><svg class="icon icon--xs" aria-hidden="true"><use href="/assets/icons.svg#expand"/></svg></button>
           </figure>
         </div>
         <div class="studio-foot">
           <p>Made in EditPlug AI Studio. Model names belong to their makers.</p>
           <button type="button" class="linklike-btn" id="studio-toggle" aria-pressed="false">Pause videos</button>
+          <span class="studio-tip">Tap any example to see it bigger.</span>
         </div>
       </div>
     </div>
@@ -361,7 +391,7 @@
         <div class="card">
           <h3>Creators and businesses</h3>
           <p>Tell us what you need and we'll come back with an editor and a price.</p>
-          <a class="btn btn--lg" href="https://tally.so/r/3qzQBg" target="_blank" rel="noopener" data-wait data-where="final"><span class="btn-label">Get a quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--lg" href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=final" data-where="final"><span class="btn-label">Get a quote</span><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow-right"/></svg></a>
         </div>
         <div class="card">
           <h3>Editors</h3>
@@ -391,7 +421,7 @@
           <li><a href="#work">Our work</a></li>
           <li><a href="#how">How it works</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="https://tally.so/r/3qzQBg" target="_blank" rel="noopener" data-where="footer">Get a quote<span class="sr-only"> (opens in a new tab)</span></a></li>
+          <li><a href="https://aistudio.editplug.com/quote?utm_source=editplug.com&amp;utm_medium=website&amp;utm_content=footer" data-where="footer">Get a quote</a></li>
         </ul>
       </nav>
       <nav aria-labelledby="f-more">
@@ -417,6 +447,14 @@
     </div>
   </div>
 </footer>
+
+<dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-title">
+  <div class="lightbox-head">
+    <p id="lightbox-title"></p>
+    <button type="button" class="round-btn" data-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#close"/></svg></button>
+  </div>
+  <div class="lightbox-body"></div>
+</dialog>
 
 <div class="consent" id="consent" role="region" aria-labelledby="consent-title" hidden>
   <h2 id="consent-title">Can we measure visits?</h2>
